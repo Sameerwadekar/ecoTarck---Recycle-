@@ -10,12 +10,33 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-	@ExceptionHandler(exception = NotFoundException.class)
-	public ResponseEntity<ApiError> notFoundExceptionHandler(NotFoundException ex,HttpServletRequest httpRequest){
-		ApiError apiError = new ApiError();
-		apiError.setError(ex.getClass().getSimpleName());
-		apiError.setErrorMessage(ex.getMessage());
-		apiError.setPath(httpRequest.getRequestURI());
-		return new ResponseEntity<ApiError>(apiError,HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiError> handleNotFound(
+            NotFoundException ex,
+            HttpServletRequest request) {
+
+        ApiError error = new ApiError(
+                request.getRequestURI(),
+                "NOT_FOUND",
+                ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiError> handleRuntime(
+            RuntimeException ex,
+            HttpServletRequest request) {
+
+        ApiError error = new ApiError(
+                request.getRequestURI(),
+                "BAD_REQUEST",
+                ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 }
+
