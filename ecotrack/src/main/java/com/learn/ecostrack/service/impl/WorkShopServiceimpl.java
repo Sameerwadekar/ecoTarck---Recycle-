@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.learn.ecostrack.dto.WorkShopDto;
@@ -38,8 +39,9 @@ public class WorkShopServiceimpl implements WorkShopService {
 	}
 
 	@Override
-	public List<WorkShopDto> getAllWorkShopt() {
-		return  workShopRepositary.findAll().stream().map(p->modelMapper.map(p, WorkShopDto.class)).toList();
+	public List<WorkShopDto> getAllWorkShopt(int pageNumber,int pageSize) {
+		PageRequest pages = PageRequest.of(pageNumber, pageSize);
+		return  workShopRepositary.findAll(pages).stream().map(p->modelMapper.map(p, WorkShopDto.class)).toList();
 	}
 
 	@Override
