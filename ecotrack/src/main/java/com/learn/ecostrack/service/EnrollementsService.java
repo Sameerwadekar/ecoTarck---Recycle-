@@ -4,5 +4,5 @@ import com.learn.ecostrack.dto.EnrollementsDto;
 
 public interface EnrollementsService {
 	EnrollementsDto	enroll(String userId,int workShopId);
-//		getAllEnroll();
+	void confirmPayment(String orderId,String paymentId);
 }

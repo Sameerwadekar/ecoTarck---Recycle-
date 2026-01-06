@@ -27,7 +27,7 @@ public class WorkShop {
 	private Integer id;
 	private String name;
 	private String description;
-	private Integer price;
+	private Double price;
 	private String image;
 	private LocalDate registrationEndDate;
 	private LocalDateTime time;

@@ -6,8 +6,11 @@ import org.hibernate.annotations.CreationTimestamp;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.learn.ecostrack.enums.PaymentStatus;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,4 +35,9 @@ public class Enrollements {
 	private WorkShop workShop;
 	@CreationTimestamp
 	private LocalDateTime enrollAt;
+	private Double amount;
+	private String razorpayOrderId;
+	private String razorpayPaymentId;
+	@Enumerated(EnumType.STRING)
+	private PaymentStatus paymentStatus;	
 }
