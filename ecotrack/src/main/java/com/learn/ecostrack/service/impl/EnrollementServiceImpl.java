@@ -23,13 +23,13 @@ import com.razorpay.Order;
 import com.razorpay.RazorpayException;
 
 @Service
-@Profile("dev")
 public class EnrollementServiceImpl implements EnrollementsService {
 	@Autowired private ModelMapper modelMapper;
 	@Autowired private EnrollementsRepositary enrollementsRepositary;
 	@Autowired private WorkShopRepositary workShopRepositary;
 	@Autowired private UserRepositary userRepositary;
-	@Autowired private EmailService emailService;
+	@Autowired(required = false)
+	private EmailService emailService;
 	@Autowired private RazorPayService razorPayService;
 	
 	@Override
@@ -52,7 +52,15 @@ public class EnrollementServiceImpl implements EnrollementsService {
 		enrollements.setPaymentStatus(PaymentStatus.CREATED);
 		enrollements.setRazorpayOrderId(order.get("id"));
 		Enrollements savedEnrollment = enrollementsRepositary.save(enrollements);
-		emailService.sendMail("snehalsameer2005@gmail.com", "enrollement completed" ,"for workshop thank you"+workShop.getName());
+//		emailService.sendMail("snehalsameer2005@gmail.com", "enrollement completed" ,"for workshop thank you"+workShop.getName());
+		if (emailService != null) {
+		    emailService.sendMail(
+		        "snehalsameer2005@gmail.com",
+		        "enrollement completed",
+		        "for workshop thank you " + workShop.getName()
+		    );
+		}
+
 		return modelMapper.map(savedEnrollment, EnrollementsDto.class);
 	}
 
