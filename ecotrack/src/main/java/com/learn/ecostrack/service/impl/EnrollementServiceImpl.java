@@ -4,6 +4,7 @@ package com.learn.ecostrack.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.learn.ecostrack.dto.EnrollementsDto;
@@ -22,6 +23,7 @@ import com.razorpay.Order;
 import com.razorpay.RazorpayException;
 
 @Service
+@Profile("dev")
 public class EnrollementServiceImpl implements EnrollementsService {
 	@Autowired private ModelMapper modelMapper;
 	@Autowired private EnrollementsRepositary enrollementsRepositary;
